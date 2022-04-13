@@ -1,0 +1,13 @@
+
+################
+#--profile = <your aws cli profile>
+#in this script , the mentioned profile is prod, sgname=mytestsgname
+
+#List the instances where Name tag contains dev in it
+#list-ec2-by-name-tag-String availability
+
+#################
+
+
+
+aws ec2 describe-instances --query "Reservations[*].Instances[*].{PublicIP:PublicIpAddress,Name:Tags[?Key=='Name']|[0].Value,Status:State.Name}" --filters "Name=instance-state-name,Values=running" "Name=tag:Name,Values='*Dev*'" --profile prod --output text >ec2-name-with-dev.csv
