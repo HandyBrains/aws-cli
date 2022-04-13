@@ -1,0 +1,7 @@
+################
+--profile = <your aws cli profile>
+in this script , the mentioned profile is prod
+
+
+#################
+aws efs describe-file-systems --query "FileSystems[*].{FileSystemID:FileSystemId, Name:Name, SizeinBytes: SizeInBytes.Value}| []|reverse(sort_by(@, &SizeinBytes))" --profile prod --output table
