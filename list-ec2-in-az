@@ -1,0 +1,10 @@
+
+################
+#--profile = <your aws cli profile>
+#in this script , the mentioned profile is prod, sgname=mytestsgname
+
+#List the ec2 instances associated with a Specific AZ
+
+#################
+
+aws ec2 describe-instances --filters Name=availability-zone,Values=eu-west-1a  --profile cad-ssr --output text >ec2-in-az.csv
