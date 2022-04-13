@@ -1,0 +1,14 @@
+
+################
+#--profile = <your aws cli profile>
+#in this script , the mentioned profile is prod, sgname=mytestsgname
+
+#List the instances associated with a Specific Security Group
+
+#################
+
+aws ec2 describe-instances \ 
+--query "Reservations[*].Instances[*].{PublicIP:PublicIpAddress,Type:InstanceType,Name:Tags[?Key=='Name']|[0].Value,Status:State.Name}" \
+--filters "Name=instance-state-name,Values=running" "Name=instance-type,Values='t2.medium','t2.micro'" "Name=instance.group-name,Values='mytestsgname'" \
+--profile prod
+--output text
