@@ -9,10 +9,10 @@ DB_INSTANCE_CLASS="db.t3.micro" # Instance size
 ALLOCATED_STORAGE="20" # Storage in GB
 ALLOCATED_STORAGE="20" # Storage in GB
 AVAILABILITY_ZONE="eu-west-1a" # Change to your preferred AZ
-VPC_ID="vpc-093138f9f6ff8a5a7" # Your VPC ID
-SUBNET_1="subnet-0613e01e3b6c24ac4" # Your Subnet ID
-SUBNET_2="subnet-0c7c2df0db26b5d44" # Your other Subnet ID
-YOUR_IP="82.42.100.147/32" # Replace with your public IP address. You can look up "what is my ip" on google.
+VPC_ID="vpc-093138f9f6ff8a5a7321" # Your VPC ID
+SUBNET_1="subnet-0613e01e3b6c24ac4321" # Your Subnet ID
+SUBNET_2="subnet-0c7c2df0db26b5d44321" # Your other Subnet ID
+#YOUR_IP="82.42.0.0/32" # Replace with your public IP address. You can look up "what is my ip" on google.
 # Get your public IP address (CloudShell specific)
 YOUR_IP=$(curl -s http://checkip.amazonaws.com/)/32
 
