@@ -1,0 +1,44 @@
+aws iam get-instance-profile --instance-profile-name EC2-SSM-Role
+
+#Create the IAM Role
+
+aws iam create-role --role-name EC2-SSM-Role --assume-role-policy-document '{"Version": "2012-10-17", "Statement": [{"Effect": "Allow", "Principal": {"Service": "ec2.amazonaws.com"}, "Action": "sts:AssumeRole"}]}'
+
+aws iam attach-role-policy --role-name EC2-SSM-Role --policy-arn arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+
+
+#Create the Instance Profile:
+
+aws iam create-instance-profile --instance-profile-name EC2-SSM-Role
+
+aws iam add-role-to-instance-profile --instance-profile-name EC2-SSM-Role --role-name EC2-SSM-Role
+
+
+aws ec2 run-instances  \
+   --image-id ami-09c2be92229422665 \
+   --instance-type t3.medium  \
+   --iam-instance-profile Name=EC2-SSM-Role  \  
+   --security-group-ids sg-054a0328656ff33d2  \ #mention your sg id
+   --subnet-id subnet-0f98d7e910c575ec7 \  #mention the subnet id
+   --associate-public-ip-address    #enable public ip
+   --key-name win-kp #mention your keypair name
+
+
+# Replace "NewAdmin" and "Password123!" with your desired username and password. 
+$username = "WinAdmin" 
+$password = "!QAZ2wsx#EDC!"
+
+# Create a secure password object. 
+$securePassword = ConvertTo-SecureString -String $password -AsPlainText -Force
+
+# Create the new local user. 
+New-LocalUser -Name $username -Password $securePassword -Description "Local Administrator"
+
+# Add the user to the local Administrators group. 
+Add-LocalGroupMember -Group "Administrators" -Member $username
+
+#Optional: Set password to never expire. 
+Set-LocalUser -Name $username -PasswordNeverExpires $true
+
+Write-Host "Local administrator '$username' created and added to the Administrators group."
+
